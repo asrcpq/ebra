@@ -12,14 +12,15 @@ fn count_line_nocheck<P: AsRef<Path>>(path: P) -> usize {
 // TODO: lock the target file?
 pub struct ArdWriter {
 	ard: Ard,
+	rotlen: usize,
 	line_count: usize,
 	writer: BufWriter<File>,
 }
 
 impl ArdWriter {
-	pub fn new(ard: Ard) -> Self {
+	pub fn new(ard: Ard, rotlen: usize) -> Self {
 		let line_count = count_line_nocheck(&ard.file_string);
-		assert!(line_count < ard.rotlen);
+		assert!(line_count < rotlen);
 		let file = OpenOptions::new()
 			.append(true)
 			.open(&ard.file_string)
@@ -27,6 +28,7 @@ impl ArdWriter {
 		let writer = BufWriter::new(file);
 		Self {
 			ard,
+			rotlen,
 			line_count,
 			writer,
 		}
@@ -35,7 +37,7 @@ impl ArdWriter {
 	pub fn write_line(&mut self, line: &str) {
 		writeln!(&mut self.writer, "{}", line).unwrap();
 		self.line_count += 1;
-		if self.line_count == self.ard.rotlen {
+		if self.line_count == self.rotlen {
 			std::fs::rename(
 				&self.ard.file_string,
 				format!("{}.ard/{}.art", self.ard.file_string, self.ard.next_suffix),
@@ -47,6 +49,7 @@ impl ArdWriter {
 				.open(&self.ard.file_string)
 				.unwrap();
 			self.writer = BufWriter::new(file);
+			self.line_count = 0;
 		}
 	}
 

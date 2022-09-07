@@ -14,7 +14,6 @@ fn last_line_nocheck<P: AsRef<Path>>(path: P) -> Option<String> {
 }
 
 pub struct Ard {
-	rotlen: usize,
 	file_string: String,
 	next_suffix: usize,
 }
@@ -47,7 +46,6 @@ impl Ard {
 			}
 		}
 		Self {
-			rotlen: 10000,
 			file_string,
 			next_suffix,
 		}

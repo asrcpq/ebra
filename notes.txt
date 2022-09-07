@@ -1,1 +1,1 @@
-change: fix parse bug in epoch, add tests
+change: fix bug adding only one file

@@ -6,13 +6,18 @@ use std::io::BufRead;
 fn main() {
 	let aarg = aarg::parse().unwrap();
 	let dst = &aarg.get("").unwrap()[1];
+	let rotlen = if let Some(v) = &aarg.get("--rotate") {
+		v[0].parse::<usize>().unwrap()
+	} else {
+		10000
+	};
 	let ard = Ard::new(dst);
 	let (last_epoch, last_line) = if let Some(x) = ard.last_line() {
 		x
 	} else {
 		(Epoch::default(), String::new())
 	};
-	let mut writer = ArdWriter::new(ard);
+	let mut writer = ArdWriter::new(ard, rotlen);
 
 	let stdin = std::io::stdin();
 	let mut point_found = false;
