@@ -1,12 +1,4 @@
 #!/bin/bash
-cd "$(dirname "$0")/.."
-if [ "$1" = "append" ]; then
-	shift
-	python append.py $@
-elif [ "$1" = "check" ]; then
-	shift
-	python check.py $@
-else
-	echo "Unknown subcmd: $1"
-	exit 1
-fi
+bin="$1"
+shift
+"$(dirname "$0")/../target/release/$bin" $@
