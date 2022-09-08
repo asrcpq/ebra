@@ -9,7 +9,6 @@ fn count_line_nocheck<P: AsRef<Path>>(path: P) -> usize {
 	reader.lines().count()
 }
 
-// TODO: lock the target file?
 pub struct ArdWriter {
 	ard: Ard,
 	rotlen: usize,

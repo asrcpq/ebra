@@ -34,7 +34,6 @@ impl Epoch {
 				} else {
 					break
 				};
-				eprintln!("{} {}", count, ns);
 				if (b'0'..=b'9').contains(&byte) {
 					if count >= 9 {
 						continue
