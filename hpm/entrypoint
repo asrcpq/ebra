@@ -1,4 +1,4 @@
 #!/bin/bash
 bin="$1"
 shift
-"$(dirname "$0")/../target/release/$bin" $@
+"$(dirname "$0")/../target/release/$bin" "$@"
