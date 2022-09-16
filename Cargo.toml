@@ -4,4 +4,4 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies.aarg]
-git = "http://localhost:8080/git/asrcpq/aarg.git"
+path = "../aarg"
